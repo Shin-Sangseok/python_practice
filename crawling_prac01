@@ -1,0 +1,95 @@
+from urllib import request
+from bs4 import BeautifulSoup
+con = request.urlopen('https://www.hottracks.co.kr/ht/biz/record/recordCategoryMain?ctgrId=00030000')
+con.status #status code
+doc = BeautifulSoup(con, 'html.parser')
+
+a_tag_list = doc.select('.category_list li')
+a_tag_list
+
+type(a_tag_list)
+len(a_tag_list)
+
+a_tag_list[0]
+a_tag_list[0].text
+
+for one in a_tag_list:
+    print(one.text)
+
+anav_list = []
+for one in a_tag_list:
+    anav_list.append(one.text)
+anav_list
+
+p_tag_list = doc.select('p.tit')
+p_tag_list[:5]
+
+tit_collect = []
+for one in p_tag_list:
+    tit_collect.append(one.text)
+tit_collect
+
+percent_list = doc.select('span.percent')
+percent_list[:5]
+
+percent_collect = []
+for one in percent_list:
+    percent_collect.append(one.text)
+percent_collect
+
+brand_list = doc.select('p.brand')
+brand_list[:5]
+
+brand_collect = []
+for x in brand_list:
+    brand_collect.append(x.text)
+brand_collect
+
+price_list = doc.select('.price>span')
+price_list[:6]
+
+price_collect = []
+for i in range(1, len(price_list), 3):
+    print(price_list[i])
+
+text = '18,000'
+text2 = text.split(',')
+text2
+text = text2[0]+text2[1]
+text
+
+for i in range(1, len(price_list)-100, 3):
+    price1 = price_list[i].text.split(',')
+    print(i, price1)
+    price2 = price1[0] + price1[1]
+    price_collect.append(price2)
+price_collect
+
+len(tit_collect)
+len(percent_collect)
+len(brand_collect)
+len(price_collect)
+percent_collect = percent_collect + [0,0,0,0]
+len(percent_collect)
+price_collect = price_collect + [0,0,0]
+len(price_collect)
+hottracts_file = open('hottract2.csv','a', encoding="UTF-8-sig")
+
+#hottracts_file.write(tit_collect[i]+','+
+#                     brand_collect[i]+','+
+#                     percent_collect[i]+','+
+#                     price_collect[i]
+#                     +'\n')
+for i in range(30):
+    hottracts_file.write(tit_collect[i]+','+
+                         brand_collect[i]+','+
+                         str(percent_collect[i])+','+
+                         str(price_collect[i])+'\n')
+
+hottracts_file.close()
+import pandas as pd
+
+hot = pd.read_csv('hottract2.csv', encoding='utf8')
+hot
+
+type(hot)
