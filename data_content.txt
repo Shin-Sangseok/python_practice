@@ -1,0 +1,27 @@
+info() : 항목별 갯수와 datatype
+head(5), tail(5): 일부분
+describe(include = 'object')
+df[항목명].value_counts(): 항목의 개수 , 타입
+df.T: 행, 열 전환
+df[항목명].astype('int32'):항목의 타입 변환(float32, str, category)
+df.sort_index(), df.sort_index(ascending=False): index로 정렬
+df.sort_values(by='age') : age컬럼으로 오름차순 정렬
+df.sort_values(by='age', ascending=False)
+df.sort_values(by=['fare', 'age'])
+df.sort_values(by=['fare', 'age'], ascending=[False, True])
+condition = df['who'] == 'man'
+df[condition], df.loc[condition]
+df[condition]['age']
+df[condition]['age'] =2 (허용 x)
+df.loc[condition, 'age'] = 2(허용 o)
+
+#조건 1정의
+condition1 = (df['fare']>30)
+
+#조건2정의
+condition2 = (df['who'] == 'woman')
+
+df.loc[condition1 & condition2]
+
+df.loc[condition1 | condition2]
+import seaborn as sns
