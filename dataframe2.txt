@@ -1,0 +1,159 @@
+import pandas as pd
+
+df = pd.read_csv('scientists.csv')
+df
+#열의 이름, 컬럼의 이름, 변수명(변수)
+
+df.iloc[0,0]
+
+df[df['Name'].str.contains('Rosaline Franklin')]
+
+df.shape
+
+df.info()
+
+#info(): 항목별 갯수와 datatype
+
+df.head(2)
+
+df.tail(3)
+
+#head(10), tail(5): 일부분
+
+#describe(include = 'object')
+
+df.count() #항목별 전체값의 개수(빈도)
+
+df['Occupation'].value_counts() #각각의 값들의 빈도수
+
+df['Age'].value_counts()
+
+df.T
+
+df.sort_index() #오름차순(작--->큰)
+
+df.sort_index(ascending=False) #내림차순
+
+#df[항목명].value_counts() : 항목의 개수, 타입
+# df.T: 행, 열 전환
+#df[항목명].astype('int32'):항목의 타입 변환(float32, str, category)
+#pd.to_datetime(df[컬럼명]): pd.to_datetime(Series객체)
+#pd.to_datetime(['2022-01-15','2022-01-11'])
+# df sort_index(). df.sort_index(ascending=False) index로 정렬
+#df.sort_values(by='age'): age컬럼으로 오름차순 정렬
+df.sort_values(by='Age')
+
+df.dtypes
+
+df['Born'] = pd.to_datetime(df['Born'])
+df['Died'] = pd.to_datetime(df['Died'])
+
+df.sort_values(by='Age', ascending=False)
+
+#df.sort_values(by = 'age', ascending=False)
+
+#df.sort_values(by=['fare', 'age'])
+
+df.sort_values(by = ['Born','Died'], ascending=[False,True])
+
+#condition = df['who']== 'man'
+#df[condition], df.loc[condition]
+#df[condition]['age']
+#df[condition]['age'] =2 허용 x
+#df.loc[condition, 'age']=2 허용
+result = df[df['Age']==61]
+print(type(result))
+print(result)
+print(result['Occupation'])
+print('------------------')
+print(result[['Born', 'Occupation']])
+
+#조건 1 정의
+#condition1 = (df['fare']>30)
+
+#조건 2 정의
+#condition2 = (df['who']=='woman')
+
+#df loc[condition1 & condition2]
+#df.loc[condition1 | condition2]
+
+import seaborn as sns
+
+df = sns.load_dataset('titanic')
+df.head()
+
+df.dtypes
+
+df.count()
+
+result2 = df[df['age']>=30]
+result2
+
+result2['age']
+
+result2[['age', 'pclass']]
+
+df[df['age']>=30]['age']
+
+df[df['age']>=30]['age'].value_counts().head()
+
+df.sort_values(by='fare', ascending=False).head(10)
+
+result1 = df.sort_values(by='fare', ascending=False).head(10)
+result1
+
+result1.sort_index(ascending=False) #index로 내림차순
+
+#나이가 20살 이상 40살 미만인 승객
+df[(df['age']>=20)&(df['age']<40)]
+
+result2 = df[df['pclass'].isin([1,2])]
+#df[df['pclass']<3]
+result2
+
+df[df['pclass'].isin([1,2])][['survived','pclass','age','fare']][:5]
+
+result2[['survived', 'pclass','age','fare']]
+
+df['pclass']
+
+df[['pclass','age']]
+
+#sample['name'].isin(['kim','lee'])
+
+#sample.isin(['kim','lee'])
+#condition = sample['name'].isin(['kim','lee'])
+#sample.loc[condition]
+
+#df1['VIP']=True
+
+#df1.drop(1): 행삭제
+
+#df1.drop(df1.index[0:10])
+
+#df1.drop('class', axis=1)==>df1.drop('class',1)
+
+#df1.drop(['who', 'deck','alive'], axis=1)
+#df1.drop(['who','deck','alive'], axis=1, inplace=True)
+
+#df1 = df.copy()
+
+#df1['round'] round(df1['fare'])/df1['age'],2)
+
+result2
+
+result2['pclass'].head(3)
+
+result2.columns
+
+result2[['pclass', 'age','who']]
+
+result2[['pclass','age','who']].value_counts
+
+result2[['pclass','age']].value_counts()
+
+result2['pclass'].value_counts()
+
+result2.count()
+
+result2['pclass'].value_counts()
